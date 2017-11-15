@@ -16,6 +16,29 @@
   color: #aaa;
 }
 
-.usermotto {
-  margin-top: 200px;
+
+.input_box,.content_box{
+  width: 92%;
+  margin: 100rpx auto;
+  display: flex;
+  flex-direction: row;
+}
+.input_box input,.input_box button{
+  display: inline-block;
+  box-sizing: border-box;
+}
+.input_box .input{
+  height: 80rpx;
+  width: 500rpx;
+  border: solid 1rpx black;
+}
+.input_box .submit{
+  height: 82rpx;
+  width: 130rpx;
+  margin-left: 20rpx;
+  padding: 5rpx 20rpx;
+  background-color: #ddd;
+  color: white;
+  text-align: center;
+  line-height: 82rpx;
 }
