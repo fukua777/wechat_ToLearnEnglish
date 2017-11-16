@@ -5,10 +5,28 @@
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
   <view class="input_box">
-    <input class="input" type="text" confirm-type="search" bindinput="search" />
-    <button class="submit" bindtap="search">查询</button>
+    <input class="input" type="text" placeholder="请输入需要翻译的内容" confirm-type="search" bindinput="input" bindconfirm="requesFunc" />
+    <button class="submit" disabled="{{button_is_disabled}}" type="{{button_type}}" bindtap="search">查询</button>
   </view>
   <view class="content_box">
-    {{explains}}
+    <view class="content">
+      <text class="query">{{content.query}}</text>
+    </view>
+    <view class="content" wx:for="{{content.translation}}">
+      {{item}}
+    </view>
+    <view class="content" >
+      <span wx:for="{{content.explains}}"><text>{{item}}；</text></span>
+    </view>
+    <view class="content" wx:if="{{content.web}}">短语</view>
+    <view class="content"  wx:for="{{content.web}}">
+      <text class="label">{{item.key}}</text>
+      <span wx:for="{{item.value}}">
+        <text>{{item}}；</text>
+      </span>
+    </view>
+    <view wx:if="{{errorTips}}">
+      {{errorTips}}
+    </view>
   </view>
 </view>

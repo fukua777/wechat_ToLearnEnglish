@@ -4,14 +4,12 @@
   flex-direction: column;
   align-items: center;
 }
-
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
 }
-
 .userinfo-nickname {
   color: #aaa;
 }
@@ -23,6 +21,9 @@
   display: flex;
   flex-direction: row;
 }
+.content_box{
+  flex-direction: column;
+}
 .input_box input,.input_box button{
   display: inline-block;
   box-sizing: border-box;
@@ -30,6 +31,7 @@
 .input_box .input{
   height: 80rpx;
   width: 500rpx;
+  padding-left: 20rpx;
   border: solid 1rpx black;
 }
 .input_box .submit{
@@ -37,8 +39,18 @@
   width: 130rpx;
   margin-left: 20rpx;
   padding: 5rpx 20rpx;
-  background-color: #ddd;
-  color: white;
+  /* background-color: #ddd; */
+   /* color: white;  */
   text-align: center;
   line-height: 82rpx;
+}
+
+.content_box .query{
+  font-size: 70rpx;
+}
+.content{
+  margin-bottom: 10px;
+}
+.label{
+  margin-right: 10rpx;
 }

@@ -8,19 +8,26 @@ Page({
   data: {
     inputValue: '',
     userInfo: {},
+    button_is_disabled: true,
+    button_type: 'default',
     url: 'http://openapi.youdao.com/api',
     appKey: '756f2b3ab40cf4be',
     key: 'F6UbvQw8DN2d3tXnLvjg8hCQXkFBXynA',
     salt: Math.floor(Math.random() * 10),
-    explains: ''
+    content: {
+      query: '',
+      explains: '',
+      translation: '',
+      web: ''
+    },
+    errorTips: ''
   },
-  requesFunc: function(req){
-    if(!req){
+  requesFunc: function(){
+    if (!this.data.inputValue) {
       return;
     }
-    console.log(this);
+    var req = this.data.inputValue;
     var that = this;
-    var explains = this.data.explains;
     wx.request({
       url: this.data.url,
       data: {
@@ -29,29 +36,59 @@ Page({
         'to': 'zh_CHS',
         'appKey': this.data.appKey,
         'salt': this.data.salt,
-        'sign': md5(this.data.appKey + req + this.data.salt + this.data.key).toUpperCase()
+        'sign': md5(this.data.appKey + req + this.data.salt + this.data.key)
       },
       method: 'GET',
       dataType: 'json',
       success: function(res) {
-        that.setData({
-          explains: res.data.basic.explains || ''
-        });
+        if(res.data.errorCode == 0){
+          that.setData({
+            content:{
+              query: res.data.query,
+              translation: res.data.translation,
+              explains: res.data.basic ? res.data.basic.explains || '' : '',
+              web: res.data.web || []
+            }
+          });
+        }else{
+          that.setData({
+            errorTips: '查询失败，错误代码'+res.data.errorCode
+          });
+        }
       },
       fail: function(err) {
-        console.log(err);
+        that.setData({
+          errorTips: '查询失败，' + err.errMsg
+        });
       },
     });
   },
   //事件处理函数
-  search: function(e){
-    if(e.type == "input"){
+  input: function(e){
+    this.setData({
+      inputValue: e.detail.value
+    });
+    if(this.data.inputValue){
       this.setData({
-        inputValue: e.detail.value
+        button_is_disabled: false,
+        button_type: 'primary'
       });
-    } else if(e.type == "tap"){
-      this.requesFunc(this.data.inputValue);
+    }else{
+      this.setData({
+        button_is_disabled: true,
+        button_type: 'default',
+        content: {
+          query: '',
+          explains: '',
+          translation: '',
+          web: ''
+        },
+        errorTips: ''
+      });
     }
+  },
+  search: function(e){
+    this.requesFunc(this.data.inputValue);
   },
   onLoad: function () {
     var that = this
