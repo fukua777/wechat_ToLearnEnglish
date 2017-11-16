@@ -10,7 +10,7 @@ Page({
     userInfo: {},
     button_is_disabled: true,
     button_type: 'default',
-    url: 'http://openapi.youdao.com/api',
+    url: 'https://openapi.youdao.com/api',
     appKey: '756f2b3ab40cf4be',
     key: 'F6UbvQw8DN2d3tXnLvjg8hCQXkFBXynA',
     salt: Math.floor(Math.random() * 10),
