@@ -18,9 +18,12 @@ Page({
       query: '',
       explains: '',
       translation: '',
-      web: ''
+      web: '',
+      audioUrl: ''
     },
     errorTips: ''
+  },
+  onReady: function(){
   },
   requesFunc: function(){
     if (!this.data.inputValue) {
@@ -47,9 +50,18 @@ Page({
               query: res.data.query,
               translation: res.data.translation,
               explains: res.data.basic ? res.data.basic.explains || '' : '',
-              web: res.data.web || []
+              web: res.data.web || [],
+              audioUrl: res.data.tSpeakUrl || ''
             }
           });
+          if (res.data && res.data.speakUrl && res.data.tSpeakUrl){
+            that.sourceAudio.setSrc(res.data.speakUrl);
+            that.resultAudio.setSrc(res.data.tSpeakUrl);
+          }
+          if (res.data && res.data.basic && res.data.basic['uk-speech'] && res.data.basic['us-speech']) {
+            that.audioResultUkSpeech.setSrc(res.data.basic['uk-speech']);
+            that.audioResultUsSpeech.setSrc(res.data.basic['us-speech']);
+          }
         }else{
           that.setData({
             errorTips: '查询失败，错误代码'+res.data.errorCode
@@ -81,7 +93,8 @@ Page({
           query: '',
           explains: '',
           translation: '',
-          web: ''
+          web: '',
+          audioUrl: ''
         },
         errorTips: ''
       });
@@ -90,8 +103,25 @@ Page({
   search: function(e){
     this.requesFunc(this.data.inputValue);
   },
+  audioSourceStart: function () {
+    this.sourceAudio.play();
+  },
+  audioResultStart: function () {
+    this.resultAudio.play();
+  },
+  audioResultUkSpeechFunc: function() {
+    this.audioResultUkSpeech.play();
+  },
+  audioResultUsSpeechFunc: function() {
+    this.audioResultUsSpeech.play();
+  },
   onLoad: function () {
-    var that = this
+    this.sourceAudio = wx.createAudioContext('sourceAudio');
+    this.resultAudio = wx.createAudioContext('resultAudio');
+    this.audioResultUkSpeech = wx.createAudioContext('audioResultUkSpeech');
+    this.audioResultUsSpeech = wx.createAudioContext('audioResultUsSpeech');
+
+    var that = this;
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
       //更新数据
@@ -99,5 +129,11 @@ Page({
         userInfo:userInfo
       })
     })
+  },
+  onUnload: function(){
+    this.myAudio.destroy();
+  },
+  onShow: function(){
+    
   }
 })

@@ -9,14 +9,23 @@
     <button class="submit" disabled="{{button_is_disabled}}" type="{{button_type}}" bindtap="search">查询</button>
   </view>
   <view class="content_box">
-    <view class="content">
+     <audio src="" id="sourceAudio"></audio> 
+     <audio src="" id="resultAudio"></audio>
+     <audio src="" id="audioResultUkSpeech"></audio>
+     <audio src="" id="audioResultUsSpeech"></audio>
+
+    <view class="content content_title">
       <text class="query">{{content.query}}</text>
+      <image wx:if="{{content.audioUrl}}" bindtap="audioSourceStart" class="audioBtn audioSourceBtn" src="../../../src/image/audio.jpg"></image>
     </view>
-    <view class="content" wx:for="{{content.translation}}">
-      {{item}}
+    <view class="content content_title" wx:for="{{content.translation}}">
+      <text class="content_trans">{{item}}</text>
+      <image wx:if="{{content.audioUrl}}" bindtap="audioResultStart" class="audioBtn" src="../../../src/image/audio.jpg"></image>
     </view>
     <view class="content" >
       <span wx:for="{{content.explains}}"><text>{{item}}；</text></span>
+      <image wx:if="{{content.explains}}" bindtap="audioResultUkSpeechFunc" class="audioBtn" src="../../../src/image/audio.jpg"></image>
+      <image wx:if="{{content.explains}}" bindtap="audioResultUsSpeechFunc" class="audioBtn" src="../../../src/image/audio.jpg"></image>
     </view>
     <view class="content" wx:if="{{content.web}}">短语</view>
     <view class="content"  wx:for="{{content.web}}">

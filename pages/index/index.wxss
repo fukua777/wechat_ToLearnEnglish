@@ -45,8 +45,23 @@
   line-height: 82rpx;
 }
 
+.content_box .content_title{
+  display: flex;
+}
 .content_box .query{
+  display: inline-block;
   font-size: 70rpx;
+}
+.content_box .content_trans{
+  margin-top: 3px;
+}
+.content_box .audioBtn{
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+}
+.content_box .audioSourceBtn{
+  margin-top: 6px;
 }
 .content{
   margin-bottom: 10px;
